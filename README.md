@@ -51,7 +51,7 @@ FYI : I tried few others like "https://github.com/wwken/Vagrant-Puppet" but got 
 ```
   this.sBuilder = SparkSession.builder().appName(this.SPARK_APP_NAME)
                     
-                   .config("spark.driver.host", "105.145.44.79");
+                   .config("spark.driver.host", "X.Y.44.79");
 ```
 The IP address of your machine (laptop) may change at work / home / starbucks so ensure to use correct IP address.
 
