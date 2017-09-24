@@ -22,7 +22,23 @@ FYI : I tried few others like "https://github.com/wwken/Vagrant-Puppet" but got 
     spark_version: 2.1.1
     spark_hadoop_version: 2.7
  ```
+`vagrant up` starts the virtual machines. Now ssh into master node and start spark cluster
+```
+[vagrant-spark-cluster]$ vagrant ssh spark-m1
+vagrant@spark-m1:~$ cd /vagrant/ansible
+vagrant@spark-m1:/vagrant/ansible$ ansible-galaxy install -r requirements.yml
+- downloading role 'oracle-java', owned by williamyeh
+- downloading role from https://github.com/William-Yeh/ansible-oracle-java/archive/2.10.0.tar.gz
+- extracting williamyeh.oracle-java to /home/vagrant/.ansible/roles/williamyeh.oracle-java
+- williamyeh.oracle-java was installed successfully
+vagrant@spark-m1:/vagrant/ansible$
+vagrant@spark-m1:/vagrant/ansible$ ansible-playbook -i nodes spark-cluster.yml
 
+
+vagrant@spark-m1:~$ cd ~/spark-1.6.2-bin-hadoop2.6/
+vagrant@spark-m1:~/spark-1.6.2-bin-hadoop2.6$ mkdir /tmp/spark-events
+vagrant@spark-m1:~/spark-1.6.2-bin-hadoop2.6$ bin/spark-shell
+```
  Ensure compatiblity between java, spark and spark_hadoop version.
  It downloads the binaries from http://d3kbcqa49mib13.cloudfront.net/ (check `/ansible/roles/apache-spark/tasks/preparation.yml`) ensure that source contains the required spark version.
 
@@ -51,7 +67,7 @@ FYI : I tried few others like "https://github.com/wwken/Vagrant-Puppet" but got 
 ```
   this.sBuilder = SparkSession.builder().appName(this.SPARK_APP_NAME)
                     
-                   .config("spark.driver.host", "X.Y.44.79");
+                   .config("spark.driver.host", "<laptop actual IP>");
 ```
 The IP address of your machine (laptop) may change at work / home / starbucks so ensure to use correct IP address.
 
