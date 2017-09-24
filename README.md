@@ -42,6 +42,8 @@ vagrant@spark-m1:~/spark-1.6.2-bin-hadoop2.6$ bin/spark-shell
  Ensure compatiblity between java, spark and spark_hadoop version.
  It downloads the binaries from http://d3kbcqa49mib13.cloudfront.net/ (check `/ansible/roles/apache-spark/tasks/preparation.yml`) ensure that source contains the required spark version.
 
+Spark web-ui url is `http://172.16.1.10:8080/` and spark master url to connect from driver program is `spark://172.16.1.10:7077`
+
 * Create your spark project in eclipse, following millions of link on the web. Ensure you have compitable client java libraries. Exception `local class incompatible: stream classdesc serialVersionUID = 7674242335164700840, local class serialVersionUID = -7685200927816255400` may be due to incompatiblity between your spark cluster version and spark driver/client libraries. Below version of depenencies worked for me for spark 2.1.1 cluster
 
 ```
@@ -75,4 +77,9 @@ The IP address of your machine (laptop) may change at work / home / starbucks so
 ```
  sc.sparkContext().addJar("/path/to/project.jar");
  
+```
+Complete spark context code
+```
+    val spark = SparkSession.builder.appName("Parquet Logger").config("spark.driver.host", "<driver host(laptop) ip address>").master("spark://172.16.1.10:7077").getOrCreate()
+
 ```
